@@ -25,9 +25,10 @@ public class UserController {
 
 	@RequestMapping("/doLogin")
 	public String doLogin(ModelMap map, String id, String password,HttpSession session) {
+		session.setAttribute("noLoginMessage", null);
 		EmployeeDomain ed = ems.queryEmployeeById(id);
-		Employee e = new Employee(ed.getEmployeeId(),ed.getEmployeeName(),ed.getEmployeeSex(),ed.getEmployeeAge(),ed.getId(),ed.getHireDate(),ed.getPosition(),ed.getPhone(),ed.getPassword());
-		if (e != null) {
+		if (ed != null) {
+			Employee e = new Employee(ed.getEmployeeId(),ed.getEmployeeName(),ed.getEmployeeSex(),ed.getEmployeeAge(),ed.getId(),ed.getHireDate(),ed.getPosition(),ed.getPhone(),ed.getPassword());
 			String myuserName = e.getEmployeeId();
 			String mypassword = e.getPassword();
 

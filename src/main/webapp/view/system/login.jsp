@@ -20,6 +20,9 @@
 				<c:if test="${loginMessage  != null}">
 				<font>${loginMessage}</font>
 				</c:if>
+				<c:if test="${noLoginMessage  != null}">
+				<font>${noLoginMessage}</font>
+				</c:if>
 				<input type="text" placeholder="Id" name="id">
 				<input type="password" placeholder="Password" name="password">
 				<button type="submit" id="login-button">Login</button>

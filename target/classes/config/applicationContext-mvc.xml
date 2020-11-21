@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        "> 
+  
+ <!-- 构建一个Spring容器，特点：xml或者注解 驱动java代码  
+	Spring容器    Bean组件容器
+	过程：
+		通过class实例化一个对象（调用构造器 构造器参数可以由 constructor-arg 指定，
+		没有将调用无参构造器），根据property setter注入其他的bean或者基本数据类型，集合等
+-->
+     <!--静态文件 <mvc:resources location="assets/css/" mapping="assets/css/**"> </mvc:resources>-->
+	
+	<mvc:default-servlet-handler/>
+	<context:component-scan
+		base-package="controller,service,dao" />
+
+	 <!-- 视图解析器 -->  
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		 <property name="prefix" value="/view/" />      
+		 <property name="suffix" value=".jsp" />      
+	</bean>
+	<!-- 处理文件上传的类 
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    <property name="defaultEncoding" value="UTF-8"></property>
+    </bean>
+     -->
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<!-- register-defaults="true"表示使用默认的消息转换器 -->
+			<!-- FastJson(Spring4.2x以上版本设置) -->
+			<!-- 使用@responsebody注解并且返回值类型为String时，返回的string字符串带有双引号"{'user':'songfs'}"，其原因是直接将string类型转成了json字符串，应该在json解析器之前添加字符串解析器 -->
+			<bean
+				class="org.springframework.http.converter.StringHttpMessageConverter" />
+			<!-- FastJsonHttpMessageConverter4 使@ResponseBody支持返回Map<String,Object>等类型,它会自动转换为json -->
+			<!-- 需要返回json时需要配置 produces = "application/json"。不需要再指定utf-8了 -->
+			<bean id="fastJsonHttpMessageConverter"
+				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<!-- 加入支持的媒体类型 -->
+				<property name="supportedMediaTypes">
+					<list>
+						<!-- 这里顺序不能反，一定先写text/html，不然IE执行AJAX时,返回JSON会出现下载文件 -->
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json;charset=UTF-8</value>
+						<value>application/xml;charset=UTF-8</value>
+					</list>
+				</property>
+				<property name="fastJsonConfig">
+					<bean
+						class="com.alibaba.fastjson.support.config.FastJsonConfig">
+						<property name="features">
+							<list>
+								<value>AllowArbitraryCommas</value>
+								<value>AllowUnQuotedFieldNames</value>
+								<value>DisableCircularReferenceDetect</value>
+							</list>
+						</property>
+						<property name="dateFormat" value="yyyy-MM-dd HH:mm:ss" />
+					</bean>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+</beans>

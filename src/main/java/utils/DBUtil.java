@@ -96,6 +96,7 @@ public class DBUtil {
 	 */
 	public ResultSet excuteQuery(String sql,String columnNames[]) {
 		try {
+			
 			PreparedStatement psta = dbConn.prepareStatement(sql, columnNames);
 			rs = psta.executeQuery();
 		} catch (SQLException e) {
@@ -104,6 +105,18 @@ public class DBUtil {
 		}
 		return rs;
 	}
+	
+	public ResultSet excuteQuery(String sql) {
+		try {
+			PreparedStatement psta = dbConn.prepareStatement(sql);
+			rs = psta.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
 	/**
 	 * 
 	 * @author hyb
@@ -115,6 +128,15 @@ public class DBUtil {
 	public void excuteUpdate(String sql,String columnNames[]) {
 		try {
 			PreparedStatement psta = dbConn.prepareStatement(sql, columnNames);
+			psta.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void excuteUpdate(String sql) {
+		try {
+			PreparedStatement psta = dbConn.prepareStatement(sql);
 			psta.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -138,6 +160,18 @@ public class DBUtil {
 				csta.setObject(i, o);
 				i++;
 			}
+			rs =csta.executeQuery();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public ResultSet executeProcedure(String sql) {
+		try {
+			csta = dbConn.prepareCall(sql);
+			
 			rs =csta.executeQuery();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

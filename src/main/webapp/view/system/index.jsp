@@ -85,7 +85,7 @@
               </a>
               <dl class="layui-nav-child">
                 <dd data-name="console" class="layui-this">
-                  <a lay-href="home/console.html">主界面</a>
+                  <a lay-href="${pageContext.request.contextPath}/room/roomList">主界面</a>
                 </dd>
               </dl>
             </li>
@@ -95,22 +95,10 @@
                 <cite>房间管理</cite>
               </a>
               <dl class="layui-nav-child">
-                <dd data-name="grid">
-                  <a href="javascript:;">栅格</a>
-                  <dl class="layui-nav-child">
-                    <dd data-name="list"><a lay-href="component/grid/list.html">等比例列表排列</a></dd>
-                    <dd data-name="mobile"><a lay-href="component/grid/mobile.html">按移动端排列</a></dd>
-                    <dd data-name="mobile-pc"><a lay-href="component/grid/mobile-pc.html">移动桌面端组合</a></dd>
-                    <dd data-name="all"><a lay-href="component/grid/all.html">全端复杂组合</a></dd>
-                    <dd data-name="stack"><a lay-href="component/grid/stack.html">低于桌面堆叠排列</a></dd>
-                    <dd data-name="speed-dial"><a lay-href="component/grid/speed-dial.html">九宫格</a></dd>
-                  </dl>
+                <dd data-name="Button">
+                  <a lay-href="${pageContext.request.contextPath}/room/roomList">房间管理</a>
                 </dd>
-                <dd data-name="button">
-                  <a lay-href="component/button/index.html">按钮</a>
-                </dd>
-               
-              </dl>
+              
             </li>
             <li data-name="template" class="layui-nav-item">
               <a href="javascript:;" lay-tips="商品管理" lay-direction="2">
